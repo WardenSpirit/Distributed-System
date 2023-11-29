@@ -1,6 +1,7 @@
 package node
 
 import cz.ctu.fee.dsv.semework.ConsoleControls
+import node.Logger.log
 import java.rmi.RemoteException
 import kotlin.system.exitProcess
 
@@ -26,7 +27,7 @@ class Node(val address: Address, private val toJoin: Address) : Runnable {
             exitProcess(1)
         }
 
-        log(id, "Contacts after joining: $contacts", Mode.SILENCE_FILL)
+        log(id, "Contacts after joining: $contacts", Logger.Mode.SILENCE_FILL)
         Thread(ConsoleControls(this)).start()
     }
 }

@@ -28,13 +28,13 @@ class ConsoleControls(private val myNode: Node) : Runnable {
 
     private fun parseCommandLine(commandline: String) {
         when (commandline) {
-            "h" -> myNode.sendHelloToNext()
+            /*"h" -> myNode.sendHelloToNext()
             "s" -> myNode.printStatus()
             "?" -> {
                 println("? – this help")
                 println("h – send Hello message to the follower (next)")
                 println("s – print node status")
-            }
+            }*/
             else ->                 // do nothing
                 println("Unrecognized command.")
         }

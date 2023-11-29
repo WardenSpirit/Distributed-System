@@ -40,7 +40,8 @@ class MessageReceiver(node: Node) : RegisteringRemote(node), CarvalhoRoucairol {
     @Throws(RemoteException::class)
     override fun acceptRequest(requesterId: Long, requesterLastEntry: Int) {
         maxRq = maxOf(maxRq, requesterLastEntry)
-        if (requirements[node.id] == true) {
+
+        if (inUse || requirements[node.id] == true) {
             if (isPrecedence(myLastEntry, requesterLastEntry, node.id, requesterId)) {
                 requirements[requesterId] = true
             }

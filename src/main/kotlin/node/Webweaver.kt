@@ -1,5 +1,6 @@
 package node
 
+import node.Logger.log
 import java.rmi.RemoteException
 
 class Webweaver(node: Node) : RegisteringRemote(node) {
@@ -22,12 +23,13 @@ class Webweaver(node: Node) : RegisteringRemote(node) {
     fun join(joiningId: Long, joiningAddress: Address): MutableMap<Long, Address> {
 
         if (joiningId == node.id) {
-            log(node.id, "I am the first and only node in this web", Mode.BIG_MESSAGE)
-            return node.contacts.nodesInWeb
-        }
+            log(node.id, "I am the first and only node in this web", Logger.Mode.BIG_MESSAGE)
 
-        log(node.id, "Someone is joining ...", Mode.BIG_MESSAGE)
-        node.contacts.nodesInWeb[joiningId] = joiningAddress
+        } else {
+            log(node.id, "Someone is joining ...", Logger.Mode.BIG_MESSAGE)
+
+            node.contacts.nodesInWeb[joiningId] = joiningAddress
+        }
         return node.contacts.nodesInWeb
     }
 
