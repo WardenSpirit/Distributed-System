@@ -1,32 +1,22 @@
 import kotlin.math.pow
+import kotlin.system.exitProcess
 
-class BooleanSetGenerator(val booleans) {
-    val BOOLEANS = 5
-    var invocation: Int = 0
+class BooleanSetGenerator(val booleans: Int) {
+    private var invocation: Int = 0
+
     private val booleanSequence: Iterator<Boolean> = sequence {
-        while (invocation != 2.toDouble().pow(BOOLEANS.toDouble()).toInt()) {
-            val set: String = invocation.toString(2).padStart(BOOLEANS, '0')
+        while (invocation != 2.toDouble().pow(booleans.toDouble()).toInt()) {
+            val set: String = invocation.toString(2).padStart(booleans, '0')
             for (char in set) {
                 yield(char == '1')
             }
             invocation++
         }
+        println("Byl přesáhnut počet stavů.")
+        exitProcess(1)
     }.iterator()
 
-    private fun pseudoBoolean(): Boolean {
+    fun pseudoBoolean(): Boolean {
         return booleanSequence.next()
-    }
-
-    private fun getNthCipher(number: Int, n: Int): Boolean {
-        return number.toString(2)[n] == '1'
-    }
-
-    fun main() {
-        repeat(10) {
-            repeat(BOOLEANS) {
-                print(if (pseudoBoolean()) 1 else 0)
-            }
-            println()
-        }
     }
 }
