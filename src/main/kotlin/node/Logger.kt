@@ -1,27 +1,27 @@
 package node
 
 object Logger {
-    val logs: MutableMap<Long, StringBuilder> = mutableMapOf()
+    val logs: MutableMap<Address, StringBuilder> = mutableMapOf()
 
     var leastImportance: Mode = Mode.BIG_MESSAGE
         set(value) {
             field = value
-            println("Log mode changed to " + value)
+            println("Log mode changed to $value")
         }
 
-    fun log(nodeId: Long, message: String, messageImportance: Mode) {
+    fun log(nodeAddress: Address, message: String, messageImportance: Mode) {
         if (messageImportance == Mode.BIG_MESSAGE || leastImportance == Mode.SILENCE_FILL) {
-            printOut(nodeId, "\n" + message + "\n")
+            printOut(nodeAddress, "\n" + message + "\n")
         } else {
-            printOut(nodeId, ".")
+            printOut(nodeAddress, ".")
         }
     }
 
-    private fun printOut(nodeId: Long, message: String) {
+    private fun printOut(nodeAddress: Address, message: String) {
         val printed: String =
-            Thread.currentThread().stackTrace[1].toString() + "\t" + String.format("%09d", nodeId) + message + "\n"
+            Thread.currentThread().stackTrace[1].toString() + "\t" + String.format("% 20d", nodeAddress) + message + "\n"
         print(printed)
-        logs.getOrPut(nodeId) { StringBuilder() }.append(printed)
+        logs.getOrPut(nodeAddress) { StringBuilder() }.append(printed)
     }
 
     enum class Mode {

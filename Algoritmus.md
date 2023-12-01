@@ -32,8 +32,8 @@
              - pošleme mu odpověď
         4. pokud:
            - čekáme na svolení (req\[i\]),
-           - máme-li od odesílatele svolení
-           - a nemáme-li před ním přednost:
+           - máme od odesílatele svolení
+           - a nemáme před ním přednost:
              - nastavíme jeho svolení na false a pošleme mu odpověď a pak i žádost (s myRq a indexem)
     - přijetí odpovědi:
         - nastaví si, že od odesílatele máme svolení (true v poli grant)
@@ -60,9 +60,9 @@ Následně po přijetí žádosti:
 ## Kontrola, zda větve přijetí žádosti zachycují všechny možné stavy
 - definující proměnné jsou: inUse, req[localId], přednost a grant[senderId] (0000 až 1111)
 - pokrytí větví:
-  1. 1xxx, x11x (projde už jen 011x)
-  2. 00xx, x100 (projde už jen 0100)
-  3. x101 (projde už jen 0101)
+  1. 1xxx, x11x (projde už jen 011x, ne 111x)
+  2. 00xx, x100 (má projít už jen 0100, ale v popsaném algoritmu i 1100 (nereálný stav))
+  3. x101 (má projít už jen 0101, ale v popsaném algoritmu projde i 1101 (nereálný stav))
 - ano, skutečně jsou pokryty všechny stavy
 
 # Zadání

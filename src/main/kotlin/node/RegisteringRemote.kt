@@ -23,10 +23,10 @@ abstract class RegisteringRemote(val node: Node) : Remote {
                 LocateRegistry.createRegistry(node.address.port)        // Create registry and (re)register object name and skeleton in it
             registry.rebind(interfaceName, skeleton)
         } catch (e: Exception) {
-            log(node.id, "$interfaceName – something is wrong: " + e.message, Logger.Mode.BIG_MESSAGE)
+            log(node.address, "$interfaceName – something is wrong: " + e.message, Logger.Mode.BIG_MESSAGE)
         }
 
-        log(node.id, "$interfaceName is started", Logger.Mode.SILENCE_FILL)
+        log(node.address, "$interfaceName is started", Logger.Mode.SILENCE_FILL)
     }
 
     companion object {

@@ -6,9 +6,8 @@ import java.rmi.RemoteException
 import java.rmi.registry.LocateRegistry
 
 class Contacts(private val node: Node) {
-    val nodesInWeb: MutableMap<Long, Address> = mutableMapOf(Pair(node.id, node.address))
+    val nodesInWeb: MutableList<Address> = mutableListOf(node.address)
 
-    // method copied from the example on Moodle
     @Throws(RemoteException::class)
     fun getCarvalhoRoucairolProxy(proxiedNode: Address): CarvalhoRoucairol {
         return getProxy(proxiedNode, node.messageReceiver, MessageReceiver.INTERFACE_NAME) as CarvalhoRoucairol
@@ -19,6 +18,7 @@ class Contacts(private val node: Node) {
         return getProxy(proxiedNode, node.webweaver, Webweaver.INTERFACE_NAME) as Webweaver
     }
 
+    // method copied from the example on Moodle
     private fun getProxy(proxiedNode: Address, localInterface: Remote, interfaceName: String) : Remote {
         if (proxiedNode == node.address) return localInterface
 
@@ -29,15 +29,5 @@ class Contacts(private val node: Node) {
             // transitive RM exception
             throw RemoteException(nbe.message)
         }
-    }
-
-    @Throws(RemoteException::class)
-    fun getCarvalhoRoucairolProxy(proxiedNode: Long): CarvalhoRoucairol {
-        return getCarvalhoRoucairolProxy(nodesInWeb.getValue(proxiedNode))
-    }
-
-    @Throws(RemoteException::class)
-    fun getWebweaverProxy(proxiedNode: Long): Webweaver {
-        return getWebweaverProxy(nodesInWeb.getValue(proxiedNode))
     }
 }

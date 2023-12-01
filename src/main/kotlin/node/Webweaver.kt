@@ -5,7 +5,7 @@ import java.rmi.RemoteException
 
 class Webweaver(node: Node) : RegisteringRemote(node) {
 
-    override val interfaceName: String
+    override val interfaceName
         get() = INTERFACE_NAME
 
     /**
@@ -20,15 +20,15 @@ class Webweaver(node: Node) : RegisteringRemote(node) {
      * Initialize the contacts in both invoking this and argument nodes, i.e. join the web this is part of.
      */
     @Throws(RemoteException::class)
-    fun join(joiningId: Long, joiningAddress: Address): MutableMap<Long, Address> {
+    fun join(joiningAddress: Address): MutableList<Address> {
 
-        if (joiningId == node.id) {
-            log(node.id, "I am the first and only node in this web", Logger.Mode.BIG_MESSAGE)
+        if (joiningAddress == node.address) {
+            log(node.address, "I am the first and only node in this web", Logger.Mode.BIG_MESSAGE)
 
         } else {
-            log(node.id, "Someone is joining ...", Logger.Mode.BIG_MESSAGE)
+            log(node.address, "Someone is joining ...", Logger.Mode.BIG_MESSAGE)
 
-            node.contacts.nodesInWeb[joiningId] = joiningAddress
+            node.contacts.nodesInWeb.add(joiningAddress)
         }
         return node.contacts.nodesInWeb
     }
