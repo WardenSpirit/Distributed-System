@@ -1,6 +1,8 @@
 package node
 
-data class Address(val hostname: String, val port: Int) : Comparable<Address> {
+import java.io.Serializable
+
+data class Address(val hostname: String, val port: Int) : Comparable<Address>, Serializable {
     constructor(copied: Address) : this(copied.hostname, copied.port)
 
     override fun compareTo(other: Address): Int {
@@ -11,5 +13,9 @@ data class Address(val hostname: String, val port: Int) : Comparable<Address> {
             return -1
         }
         return port.compareTo(other.port)
+    }
+
+    override fun toString(): String {
+        return "$hostname:$port"
     }
 }
