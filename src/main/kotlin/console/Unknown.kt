@@ -5,7 +5,7 @@ import node.Node
 object Unknown : ConsoleCommand() {
 
     public override fun execute(node: Node, commandText: String) {
-        Logger.`                              log`(node.address, "\"$commandText\" is an UNKNOWN COMMAND", Logger.Mode.BIG_MESSAGE)
+        println("\"$commandText\" is an UNKNOWN COMMAND")
         Help.executeIfValid(node, Help.COMMAND)
     }
 

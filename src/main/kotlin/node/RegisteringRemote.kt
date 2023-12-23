@@ -44,17 +44,17 @@ abstract class RegisteringRemote(val node: Node, val delayedSending: Boolean) : 
 
     // method copied from the example on Moodle
     protected fun getProxy(proxiedNode: Address, localInterface: Joinable): Joinable? {
-        if (delayedSending) Thread.sleep(3000)      // cleanable: move this feature to another class
+        if (delayedSending) Thread.sleep(3000)      // cleanable: move this feature to another class, clean overloading this method
 
         if (proxiedNode == node.address) return localInterface
 
-        return try {
+        try {
             val remoteRegistry = LocateRegistry.getRegistry(proxiedNode.hostname, proxiedNode.port)
             val proxyToReturn = remoteRegistry.lookup(interfaceName) as Joinable
             `                              log`(
                 node.address,
                 "proxyToReturn is initialized: $proxyToReturn",
-                Logger.Mode.BIG_MESSAGE
+                Logger.Mode.SILENCE_FILL
             )
             return proxyToReturn
         } catch (e: Exception) {
@@ -65,23 +65,23 @@ abstract class RegisteringRemote(val node: Node, val delayedSending: Boolean) : 
                 Logger.Mode.BIG_MESSAGE
             )
             node.webweaver.disconnectFromMissing(proxiedNode)
-            null
+            return null
         }
     }
 
 
     protected fun getProxy(proxiedNode: Address, localInterface: RemoteCarvalhoRoucairol): RemoteCarvalhoRoucairol? {
-        if (delayedSending) Thread.sleep(3000)      // cleanable: move this feature to another class
+        if (delayedSending) Thread.sleep(3000)      // cleanable: move this feature to another class, clean overloading this method
 
         if (proxiedNode == node.address) return localInterface
 
-        return try {
+         try {
             val remoteRegistry = LocateRegistry.getRegistry(proxiedNode.hostname, proxiedNode.port)
             val proxyToReturn = remoteRegistry.lookup(interfaceName) as RemoteCarvalhoRoucairol
             `                              log`(
                 node.address,
                 "proxyToReturn is initialized: $proxyToReturn",
-                Logger.Mode.BIG_MESSAGE
+                Logger.Mode.SILENCE_FILL
             )
             return proxyToReturn
         } catch (e: Exception) {
@@ -92,7 +92,7 @@ abstract class RegisteringRemote(val node: Node, val delayedSending: Boolean) : 
                 Logger.Mode.BIG_MESSAGE
             )
             node.webweaver.disconnectFromMissing(proxiedNode)
-            null
+            return null
         }
     }
 }

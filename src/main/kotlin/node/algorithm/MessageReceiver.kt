@@ -78,7 +78,7 @@ class MessageReceiver(node: Node, delayedSending: Boolean) : RegisteringRemote(n
 
 
     override fun acceptRequest(requester: Address, requesterLastEntry: Int) {
-        `                              log`(node.address, "accepting request from $requester", BIG_MESSAGE)
+        `                              log`(node.address, "accepting request from $requester", SILENCE_FILL)
         maxVersion = maxOf(maxVersion, requesterLastEntry)
         synchronized(relations) {
             requestStrategy.reactOnRequest(requester, requesterLastEntry)

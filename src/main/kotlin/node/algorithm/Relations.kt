@@ -7,13 +7,18 @@ class Relations(private val messageReceiver: MessageReceiver) {
     val mappings: MutableMap<Address, Relation> = mutableMapOf()
 
     fun requestMissingGrantsRepeatedly(myAddress: Address, myLastEntry: Int) {
-        while (requestMissingGrants(
-                myAddress,
-                myLastEntry
-            ) > 0
-        ) {       // optimizable: glutting the web with requests to every node we don't have grant from, set should decrease on size
-            `                              log`(messageReceiver.node.address, "I am missing some grants.", Logger.Mode.SILENCE_FILL)
+        var alreadyIterated = false
+        while (requestMissingGrants(myAddress, myLastEntry) > 0) {
+            // optimizable: glutting the web with requests to every node we don't have grant from, set should decrease on size
+            if (!alreadyIterated) {
+                `                              log`(messageReceiver.node.address, "I am missing some grants. :-(", Logger.Mode.SILENCE_FILL)
+                alreadyIterated = true
+            }
+            print(".")
             Thread.sleep(250)
+        }
+        if (alreadyIterated) {
+            println()
         }
         `                              log`(messageReceiver.node.address, "I have grants from everyone.", Logger.Mode.SILENCE_FILL)
     }
