@@ -24,6 +24,6 @@ object Logger {
 
     // order sensitive
     enum class Mode {
-        BIG_MESSAGE, SILENCE_FILL, RESTRICTED
+        SILENCE_FILL, BIG_MESSAGE, RESTRICTED
     }
 }

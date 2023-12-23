@@ -27,7 +27,6 @@ class ConsoleControls(private val localNode: Node) : Runnable {
     }
 
     private fun parseCommandLine(commandText: String) {
-        Logger.`                              log`(localNode.address, "command: \"$commandText\"", Logger.Mode.SILENCE_FILL)
         if (!Help.executeIfValid(localNode, commandText) &&
             !ShowStatus.executeIfValid(localNode, commandText) &&
             !ShowDetail.executeIfValid(localNode, commandText) &&

@@ -15,7 +15,7 @@ class Webweaver(node: Node, delayedSending: Boolean) : RegisteringRemote(node, d
         disconnectFromAllMissing()
         getProxy(toJoin, this)?.let { proxyToJoin ->
             val receivedContacts: HashSet<Address> = proxyToJoin.interchangeContacts(node.address, node.messageReceiver.relations.mappings.keys.toHashSet())
-            val contactsNewToMe = receivedContacts.plus(toJoin).subtract(node.messageReceiver.relations.mappings.keys).toSet()
+            val contactsNewToMe = receivedContacts.plus(toJoin).minus(node.address).subtract(node.messageReceiver.relations.mappings.keys).toSet()
             spreadMyContactsToAll(contactsNewToMe)
             contactsNewToMe.forEach { node.messageReceiver.relations.addPresentMapping(it) }
             `                              log`(node.address, "Attempt to add $toJoin to contacts was successful.", Logger.Mode.SILENCE_FILL)

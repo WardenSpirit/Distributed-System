@@ -72,7 +72,7 @@ class MessageReceiver(node: Node, delayedSending: Boolean) : RegisteringRemote(n
     }
 
     private fun waitForUserInput(message: String) {
-        `                              log`(node.address, message, BIG_MESSAGE)
+        println(message)
         readLine()
     }
 
@@ -88,7 +88,7 @@ class MessageReceiver(node: Node, delayedSending: Boolean) : RegisteringRemote(n
     override fun acceptGrant(granter: Address, granterSharedVariable: Int, granterLastEntry: Int) {
         `                              log`(
             node.address,
-            "accepting grant: from $granter, its variable: $granterSharedVariable, its-my lastEntry: $granterLastEntry-$myLastEntry",
+            "accepting grant: from $granter, its variable: $granterSharedVariable, its lastEntry - my maxVersion: $granterLastEntry-$maxVersion",
             SILENCE_FILL
         )
         synchronized(this) {
