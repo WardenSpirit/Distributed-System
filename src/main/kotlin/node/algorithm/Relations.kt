@@ -1,6 +1,6 @@
 package node.algorithm
 
-import Logger.`                              log`
+import Logger.`log`
 import node.Address
 
 class Relations(private val messageReceiver: MessageReceiver) {
@@ -11,7 +11,7 @@ class Relations(private val messageReceiver: MessageReceiver) {
         while (requestMissingGrants(myAddress, myLastEntry) > 0) {
             // optimizable: glutting the web with requests to every node we don't have grant from, set should decrease on size
             if (!alreadyIterated) {
-                `                              log`(messageReceiver.node.address, "I am missing some grants. :-(", Logger.Mode.SILENCE_FILL)
+                `log`(messageReceiver.node.address, "I am missing some grants. :-(", Logger.Mode.SILENCE_FILL)
                 alreadyIterated = true
             }
             print(".")
@@ -20,7 +20,7 @@ class Relations(private val messageReceiver: MessageReceiver) {
         if (alreadyIterated) {
             println()
         }
-        `                              log`(messageReceiver.node.address, "I have grants from everyone.", Logger.Mode.SILENCE_FILL)
+        `log`(messageReceiver.node.address, "I have grants from everyone.", Logger.Mode.SILENCE_FILL)
     }
 
     fun requestMissingGrants(myAddress: Address, myLastEntry: Int): Int {

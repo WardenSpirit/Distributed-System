@@ -1,7 +1,7 @@
 package node
 
 import Logger
-import Logger.`                              log`
+import Logger.`log`
 import node.algorithm.RemoteCarvalhoRoucairol
 import java.rmi.Remote
 import java.rmi.registry.LocateRegistry
@@ -28,13 +28,13 @@ abstract class RegisteringRemote(val node: Node, val delayedSending: Boolean) : 
             val skeletalStub = UnicastRemoteObject.exportObject(this, node.address.port)
             localRegistry = localRegistry ?: LocateRegistry.createRegistry(node.address.port)
             localRegistry?.rebind(interfaceName, skeletalStub) ?: throw RegistryCouldNotBeBoundException("The local registry was null!")
-`                              log`(
+`log`(
                 node.address,
                 "$interfaceName successfully bound by registry at ${node.address.hostname}:${node.address.port}.",
                 Logger.Mode.SILENCE_FILL
             )
         } catch (e: Exception) {
-            `                              log`(
+            `log`(
                 node.address,
                 "Something is wrong with Java RMI – $interfaceName:\n\t" + e.message,
                 Logger.Mode.BIG_MESSAGE
@@ -51,7 +51,7 @@ abstract class RegisteringRemote(val node: Node, val delayedSending: Boolean) : 
         try {
             val remoteRegistry = LocateRegistry.getRegistry(proxiedNode.hostname, proxiedNode.port)
             val proxyToReturn = remoteRegistry.lookup(interfaceName) as Joinable
-            `                              log`(
+            `log`(
                 node.address,
                 "proxyToReturn is initialized: $proxyToReturn",
                 Logger.Mode.SILENCE_FILL
@@ -59,7 +59,7 @@ abstract class RegisteringRemote(val node: Node, val delayedSending: Boolean) : 
             return proxyToReturn
         } catch (e: Exception) {
             // transitive RM exception
-            `                              log`(
+            `log`(
                 node.address,
                 "connecting finished with exception: ${e.message}",
                 Logger.Mode.BIG_MESSAGE
@@ -78,7 +78,7 @@ abstract class RegisteringRemote(val node: Node, val delayedSending: Boolean) : 
          try {
             val remoteRegistry = LocateRegistry.getRegistry(proxiedNode.hostname, proxiedNode.port)
             val proxyToReturn = remoteRegistry.lookup(interfaceName) as RemoteCarvalhoRoucairol
-            `                              log`(
+            `log`(
                 node.address,
                 "proxyToReturn is initialized: $proxyToReturn",
                 Logger.Mode.SILENCE_FILL
@@ -86,7 +86,7 @@ abstract class RegisteringRemote(val node: Node, val delayedSending: Boolean) : 
             return proxyToReturn
         } catch (e: Exception) {
             // transitive RM exception
-            `                              log`(
+            `log`(
                 node.address,
                 "connecting finished with exception: ${e.message}",
                 Logger.Mode.BIG_MESSAGE

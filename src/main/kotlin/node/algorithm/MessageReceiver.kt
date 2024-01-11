@@ -1,6 +1,6 @@
 package node.algorithm
 
-import Logger.`                              log`
+import Logger.`log`
 import Logger.Mode.BIG_MESSAGE
 import Logger.Mode.SILENCE_FILL
 import node.Address
@@ -19,12 +19,12 @@ class MessageReceiver(node: Node, delayedSending: Boolean) : RegisteringRemote(n
 
     var myLastEntry: Int = 0                // myRq, tj. kdy jsme do kritické sekce naposledy vstoupili
         private set(value) {
-            `                              log`(node.address, "changing myLastEntry to $value", SILENCE_FILL)
+            `log`(node.address, "changing myLastEntry to $value", SILENCE_FILL)
             field = value
         }
     var maxVersion: Int = 0                      // maximální hodnota žádostí, které k nám přišly
         private set(value) {
-            `                              log`(node.address, "changing maxVersion to $value", SILENCE_FILL)
+            `log`(node.address, "changing maxVersion to $value", SILENCE_FILL)
             field = value
         }
     private var sharedVariable: Int = 0
@@ -78,7 +78,7 @@ class MessageReceiver(node: Node, delayedSending: Boolean) : RegisteringRemote(n
 
 
     override fun acceptRequest(requester: Address, requesterLastEntry: Int) {
-        `                              log`(node.address, "accepting request from $requester", SILENCE_FILL)
+        `log`(node.address, "accepting request from $requester", SILENCE_FILL)
         maxVersion = maxOf(maxVersion, requesterLastEntry)
         synchronized(relations) {
             requestStrategy.reactOnRequest(requester, requesterLastEntry)
@@ -86,7 +86,7 @@ class MessageReceiver(node: Node, delayedSending: Boolean) : RegisteringRemote(n
     }
 
     override fun acceptGrant(granter: Address, granterSharedVariable: Int, granterLastEntry: Int) {
-        `                              log`(
+        `log`(
             node.address,
             "accepting grant: from $granter, its variable: $granterSharedVariable, its lastEntry - my maxVersion: $granterLastEntry-$maxVersion",
             SILENCE_FILL

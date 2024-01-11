@@ -1,6 +1,6 @@
 package node
 
-import Logger.`                              log`
+import Logger.`log`
 import console.ConsoleControls
 import node.algorithm.MessageReceiver
 
@@ -12,7 +12,7 @@ class Node(val address: Address, private val toJoin: Address, delayedSending: Bo
     init {
         messageReceiver.register()
         webweaver.register()
-        `                              log`(address, "node created", Logger.Mode.SILENCE_FILL)
+        `log`(address, "node created", Logger.Mode.SILENCE_FILL)
     }
 
     // the structure of this method is copied from the example on Moodle
@@ -20,7 +20,7 @@ class Node(val address: Address, private val toJoin: Address, delayedSending: Bo
         if (address != toJoin) {
             webweaver.joinWeb(toJoin)
         } else {
-            `                              log`(address, "I feel alone, the address to join is my own.", Logger.Mode.SILENCE_FILL)
+            `log`(address, "I feel alone, the address to join is my own.", Logger.Mode.SILENCE_FILL)
         }
         Thread(ConsoleControls(this)).start()
     }

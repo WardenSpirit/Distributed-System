@@ -9,7 +9,7 @@ object Logger {
             println("Log mode changed to $value")
         }
 
-    fun `                              log`(nodeAddress: Address, message: String, messageImportance: Mode) {
+    fun `log`(nodeAddress: Address, message: String, messageImportance: Mode) {
         if (messageImportance.ordinal >= leastImportance.ordinal)
             printOut(nodeAddress, message)
     }

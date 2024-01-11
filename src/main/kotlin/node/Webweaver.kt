@@ -1,6 +1,6 @@
 package node
 
-import Logger.`                              log`
+import Logger.`log`
 
 class Webweaver(node: Node, delayedSending: Boolean) : RegisteringRemote(node, delayedSending), Joinable {
 
@@ -18,7 +18,7 @@ class Webweaver(node: Node, delayedSending: Boolean) : RegisteringRemote(node, d
             val contactsNewToMe = receivedContacts.plus(toJoin).minus(node.address).subtract(node.messageReceiver.relations.mappings.keys).toSet()
             spreadMyContactsToAll(contactsNewToMe)
             contactsNewToMe.forEach { node.messageReceiver.relations.addPresentMapping(it) }
-            `                              log`(node.address, "Attempt to add $toJoin to contacts was successful.", Logger.Mode.SILENCE_FILL)
+            `log`(node.address, "Attempt to add $toJoin to contacts was successful.", Logger.Mode.SILENCE_FILL)
         }
     }
 
@@ -27,7 +27,7 @@ class Webweaver(node: Node, delayedSending: Boolean) : RegisteringRemote(node, d
      * @return all the nodes this node knew about right before adding the joining node.
      */
     override fun interchangeContacts(joiningAddress: Address, joiningContacts: HashSet<Address>): HashSet<Address> {
-        `                              log`(node.address, "$joiningAddress joining me (${node.address})", Logger.Mode.BIG_MESSAGE)
+        `log`(node.address, "$joiningAddress joining me (${node.address})", Logger.Mode.BIG_MESSAGE)
         disconnectFromAllMissing()
         val formerOthersInWeb: HashSet<Address> = node.messageReceiver.relations.mappings.keys.toHashSet()
         node.messageReceiver.relations.addIncomingMapping(joiningAddress)
@@ -48,7 +48,7 @@ class Webweaver(node: Node, delayedSending: Boolean) : RegisteringRemote(node, d
     }
 
     fun disconnectFromMissing(missing: Address) {
-        `                              log`(
+        `log`(
             node.address,
             "Message could not be sent to $missing. Disconnecting.",
             Logger.Mode.BIG_MESSAGE
