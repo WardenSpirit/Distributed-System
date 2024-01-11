@@ -11,13 +11,40 @@ val addresses = arrayOf(
 )
 
 fun main(args: Array<String>) {
-    if (args.size !in 2..3) throw IllegalArgumentException()
-    try {
-        val localAddress = addresses[Integer.parseInt(args[0])]
-        val joinedAddress = addresses[Integer.parseInt(args[1])]
-        val delay: Boolean = args.size == 3 && (args[2] == "-s" || args[2] == "slow")
-        Node(localAddress, joinedAddress, delay).run()
-    } catch (e: NumberFormatException) {
-        println("These program arguments don't work!")
+    val localAndJoinedAddress: Array<Address> = getAddressesFromArgs(args)
+    val delay: Boolean?
+    delay = args[args.size - 1].contains("s")
+    Node(localAndJoinedAddress[0], localAndJoinedAddress[1], delay).run()
+}
+
+/**
+ * Returns an array of 2 addresses. Behaviour depends on whether the first arg contains dot (.) character.
+ */
+fun getAddressesFromArgs(args: Array<String>): Array<Address> {
+    lateinit var localAddress: Address
+    lateinit var joinedAddress: Address
+    if (args[0].contains(".")) {
+        try {
+            localAddress = Address(args[0], Integer.parseInt(args[1]))
+        } catch (e: NumberFormatException) {
+            println("The second program argument doesn't work!")
+        }
+        try {
+            joinedAddress = Address(args[2], Integer.parseInt(args[3]))
+        } catch (e: NumberFormatException) {
+            println("The fourth program argument doesn't work!")
+        }
+    } else {
+        try {
+            localAddress = addresses[Integer.parseInt(args[0])]
+        } catch (e: NumberFormatException) {
+            println("The first program argument doesn't work!")
+        }
+        try {
+            joinedAddress = addresses[Integer.parseInt(args[1])]
+        } catch (e: NumberFormatException) {
+            println("The second program argument doesn't work!")
+        }
     }
+    return arrayOf(localAddress, joinedAddress)
 }
